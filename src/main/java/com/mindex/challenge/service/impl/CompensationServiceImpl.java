@@ -23,6 +23,8 @@ public class CompensationServiceImpl implements CompensationService {
 
     @Override
     public Compensation create(Compensation compensation) {
+    LOG.debug("Creating compensation with id [{}]", compensation.getEmployee().getEmployeeId());
+
         compensationRepository.insert(compensation);
         Employee employee = employeeRepository.findByEmployeeId(compensation.getEmployee().getEmployeeId());
         compensation.setEmployee(employee);
@@ -31,7 +33,10 @@ public class CompensationServiceImpl implements CompensationService {
 
     @Override
     public Compensation read(String id) {
+        LOG.debug("Creating employee with id [{}]", id);
         Employee employee = employeeRepository.findByEmployeeId(id);
+
+        LOG.debug("Creating compensation with id [{}]", id);
         Compensation compensation = compensationRepository.findByEmployeeEmployeeId(id);
         compensation.setEmployee(employee);
         return compensation;

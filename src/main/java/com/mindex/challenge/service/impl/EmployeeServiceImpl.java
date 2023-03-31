@@ -50,8 +50,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.save(employee);
     }
 
+    // This method is explained in README.md
     @Override
-    public ReportingStructure numberOfReports(String id) {
+    public ReportingStructure computeNumberOfReports(String id) {
         int sum = -1;
         Employee head = this.read(id);
         LinkedList<Employee> queue = new LinkedList<>();
@@ -68,12 +69,11 @@ public class EmployeeServiceImpl implements EmployeeService {
                 directReports = new ArrayList<>();
             }
             for (Employee e : directReports) {
-                Employee asdf = this.read(e.getEmployeeId());
-                if (asdf != null) {
-                    queue.add(asdf);
+                Employee reportingEmployee = this.read(e.getEmployeeId());
+                if (reportingEmployee != null) {
+                    queue.add(reportingEmployee);
                 }
             }
-
         }
 
         return new ReportingStructure(head, sum);
