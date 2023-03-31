@@ -1,7 +1,10 @@
 package com.mindex.challenge.controller;
 
+import com.mindex.challenge.data.Compensation;
 import com.mindex.challenge.data.Employee;
+import com.mindex.challenge.data.ReportingStructure;
 import com.mindex.challenge.service.EmployeeService;
+import jdk.internal.org.jline.utils.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +37,11 @@ public class EmployeeController {
 
         employee.setEmployeeId(id);
         return employeeService.update(employee);
+    }
+
+    @GetMapping("/employee/reports/{id}")
+    public ReportingStructure numberOfReports(@PathVariable String id) {
+        LOG.debug("Received report count request for id [{}]", id);
+        return employeeService.numberOfReports(id);
     }
 }

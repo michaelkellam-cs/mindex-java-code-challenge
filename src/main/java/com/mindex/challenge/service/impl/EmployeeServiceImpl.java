@@ -1,13 +1,16 @@
 package com.mindex.challenge.service.impl;
 
 import com.mindex.challenge.dao.EmployeeRepository;
+import com.mindex.challenge.data.Compensation;
 import com.mindex.challenge.data.Employee;
+import com.mindex.challenge.data.ReportingStructure;
 import com.mindex.challenge.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.UUID;
+
+import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -46,4 +49,34 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return employeeRepository.save(employee);
     }
+
+    @Override
+    public ReportingStructure numberOfReports(String id) {
+        int sum = -1;
+        Employee head = this.read(id);
+        LinkedList<Employee> queue = new LinkedList<>();
+        if (head == null) {
+            return new ReportingStructure(null, 0);
+        }
+        queue.add(head);
+
+        while (!queue.isEmpty()) {
+            sum++;
+            Employee employee = queue.poll();
+            List<Employee> directReports = employee.getDirectReports();
+            if (directReports == null) {
+                directReports = new ArrayList<>();
+            }
+            for (Employee e : directReports) {
+                Employee asdf = this.read(e.getEmployeeId());
+                if (asdf != null) {
+                    queue.add(asdf);
+                }
+            }
+
+        }
+
+        return new ReportingStructure(head, sum);
+    }
+
 }
