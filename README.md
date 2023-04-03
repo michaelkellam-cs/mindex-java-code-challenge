@@ -57,7 +57,7 @@ That way, instead of the return object looking like this:
         "directReports": null,
     },
     "salary": 34232.11,
-    "effectiveDate": "now"
+    "effectiveDate": "2023-04-03"
 }
 
 ```
@@ -90,7 +90,7 @@ It looks like this:
         ]
     },
     "salary": 34232.11,
-    "effectiveDate": "now"
+    "effectiveDate": "2023-04-03"
 }
 ```
 
