@@ -36,7 +36,7 @@ public class CompensationServiceImpl implements CompensationService {
         Employee employee = employeeRepository.findByEmployeeId(id);
 
         LOG.debug("Creating compensation with id [{}]", id);
-        Compensation compensation = compensationRepository.findByEmployeeEmployeeId(id);
+        Compensation compensation = compensationRepository.findByEmployee(employee);
         compensation.setEmployee(employee);
         return compensation;
     }

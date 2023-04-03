@@ -1,0 +1,180 @@
+{
+	"info": {
+		"_postman_id": "0cd71f3b-98a3-4243-8cba-b5afea3fb916",
+		"name": "Mindex - Task 1 Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get numberOfReports",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Number of reports should be 4\", function() {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.numberOfReports).to.eql(4);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/employee/reports/16a596ae-edd3-4847-99fe-c4518e82c86f",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"employee",
+						"reports",
+						"16a596ae-edd3-4847-99fe-c4518e82c86f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add new Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"responseBody = pm.response.json();\r",
+							"pm.collectionVariables.set(\"newEmployeeId\", responseBody.employeeId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Madden\",\r\n    \"position\": \"Coach\",\r\n    \"department\": \"Engineering\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/employee",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"employee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add new directReport",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Count of directReports should be 3\", function() {\r",
+							"    responseBody = pm.response.json();\r",
+							"    pm.expect((responseBody.directReports).length).to.eql(3);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\" : \"John\",\r\n    \"lastName\" : \"Lennon\",\r\n    \"position\" : \"Development Manager\",\r\n    \"department\" : \"Engineering\",\r\n    \"directReports\": [\r\n        {\r\n            \"employeeId\": \"b7839309-3348-463b-a7e3-5de1c168beb3\"\r\n        },\r\n        {\r\n            \"employeeId\": \"03aa1462-ffa9-4978-901b-7c001562cf6f\"\r\n        },\r\n        {\r\n            \"employeeId\": \"{{newEmployeeId}}\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/employee/16a596ae-edd3-4847-99fe-c4518e82c86f",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"employee",
+						"16a596ae-edd3-4847-99fe-c4518e82c86f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get new numberOfReports",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Number of reports should now be 5\", function() {\r",
+							"    responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.numberOfReports).to.eql(5);\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.unset(\"newEmployeeId\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/employee/reports/16a596ae-edd3-4847-99fe-c4518e82c86f",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"employee",
+						"reports",
+						"16a596ae-edd3-4847-99fe-c4518e82c86f"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -2,6 +2,7 @@ package com.mindex.challenge.data;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
@@ -10,6 +11,7 @@ public class Compensation {
 
     private static final Logger LOG = LoggerFactory.getLogger(Compensation.class);
 
+    @DBRef
     private Employee employee;
 
     private double salary;
