@@ -9,16 +9,17 @@ For this task, I knew that I could use BFS or DFS since these `directReports` ca
 I went with BFS because I find it easier to implement, and since the entire tree must be traversed, the performance should
 be similar between both algorithms.
 
-Using a `LinkedList` as a queue, it will add the head `Employee`, and the list of direct reports will act as the child nodes.
-Then upon, then after the child nodes have been added to the queue, the queue will pop the first `Employee` in the list, and that
-will now be the acting head node. This process repeats until all `Employees` have been added and eventually popped. Then, simply
-add 1 to the sum counter after each iteration, and that is how many reports are tied to that specific `Employee`.
+Using a `LinkedList` as a queue, it will add the head `Employee` (the `Employee` of the provided `employeeId`). Then, the queue
+will do the following until it is empty:
+- Pop the oldest `Employee` in the queue and add 1 to the sum
+- Get the list of `Employees` that report to the popped `Employee`
+- Add those `Employees` to the queue
 
 ![](bfs.gif)
 
-I decided to keep this `numberOfReports`/`ReportingStructure` objects in the `EmployeeController` and `EmployeeService`. This is because it's closely related to
-the `Employee's` data. However, a case could be made to create a new controller for it, especially if there were to
-be more functionality regarding `ReportingStructures`.
+I decided to put the endpoint for this in the `EmployeeController` instead of creating a separate controller since its data is closely
+related to `Employee`. However, a case could be made to separate this functionality into a different controller and service, especially
+if this functionality is expanded upon.
 
 The time complexity of `numberOfReports()` is `O(n)`, where `n` is the number of `Employees` in the tree of the starting `Employee`.
 

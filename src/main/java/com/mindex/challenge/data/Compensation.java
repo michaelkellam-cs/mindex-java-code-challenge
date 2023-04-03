@@ -1,23 +1,22 @@
 package com.mindex.challenge.data;
 
-import java.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 public class Compensation {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Compensation.class);
 
     private Employee employee;
 
     private double salary;
 
-    private String effectiveDate;
-
-//    public Compensation(Employee employee, double salary, LocalDate effectiveDate) {
-//        this.employee = employee;
-//        this.salary = salary;
-//        this.effectiveDate = effectiveDate;
-//    }
+    private LocalDateTime effectiveDate;
 
     public Compensation() {
-
     }
 
     public Employee getEmployee() {
@@ -28,7 +27,7 @@ public class Compensation {
         return salary;
     }
 
-    public String getEffectiveDate() {
+    public LocalDateTime getEffectiveDate() {
         return effectiveDate;
     }
 
@@ -41,7 +40,12 @@ public class Compensation {
     }
 
     public void setEffectiveDate(String effectiveDate) {
-        this.effectiveDate = effectiveDate;
+        try {
+            this.effectiveDate = LocalDateTime.parse(effectiveDate);
+        } catch (DateTimeParseException e) {
+            LOG.error("Could not parse [{}], setting effectiveDate to current date", effectiveDate);
+            this.effectiveDate = LocalDateTime.now();
+        }
     }
 
 }

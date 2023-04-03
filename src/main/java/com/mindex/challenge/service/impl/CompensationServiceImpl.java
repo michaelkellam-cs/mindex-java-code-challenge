@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CompensationServiceImpl implements CompensationService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(EmployeeServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CompensationServiceImpl.class);
 
     @Autowired
     private CompensationRepository compensationRepository;
@@ -23,8 +23,7 @@ public class CompensationServiceImpl implements CompensationService {
 
     @Override
     public Compensation create(Compensation compensation) {
-    LOG.debug("Creating compensation with id [{}]", compensation.getEmployee().getEmployeeId());
-
+        LOG.debug("Creating compensation with id [{}]", compensation.getEmployee().getEmployeeId());
         compensationRepository.insert(compensation);
         Employee employee = employeeRepository.findByEmployeeId(compensation.getEmployee().getEmployeeId());
         compensation.setEmployee(employee);
