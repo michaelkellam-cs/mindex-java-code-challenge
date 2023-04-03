@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public class Compensation {
@@ -16,7 +16,7 @@ public class Compensation {
 
     private double salary;
 
-    private LocalDateTime effectiveDate;
+    private LocalDate effectiveDate;
 
     public Compensation() {
     }
@@ -29,7 +29,7 @@ public class Compensation {
         return salary;
     }
 
-    public LocalDateTime getEffectiveDate() {
+    public LocalDate getEffectiveDate() {
         return effectiveDate;
     }
 
@@ -43,10 +43,10 @@ public class Compensation {
 
     public void setEffectiveDate(String effectiveDate) {
         try {
-            this.effectiveDate = LocalDateTime.parse(effectiveDate);
+            this.effectiveDate = LocalDate.parse(effectiveDate);
         } catch (DateTimeParseException e) {
             LOG.error("Could not parse [{}], setting effectiveDate to current date", effectiveDate);
-            this.effectiveDate = LocalDateTime.now();
+            this.effectiveDate = LocalDate.now();
         }
     }
 

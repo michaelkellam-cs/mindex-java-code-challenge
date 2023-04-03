@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3bd5ab4d-5bc2-4674-ab66-1413651db00e",
+		"_postman_id": "05adc1fb-ed56-49eb-a24f-3827d49a5972",
 		"name": "Mindex - Task 2 Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -24,9 +24,9 @@
 							"    pm.expect(responseBody.salary).eql(588321.44);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Effective date is filled out\", function() {\r",
+							"pm.test(\"Effective date matches expected\", function() {\r",
 							"    const responseBody = pm.response.json();\r",
-							"    pm.expect(responseBody.effectiveDate).not.equal(null);\r",
+							"    pm.expect(responseBody.effectiveDate).eql(JSON.parse(request.data).effectiveDate);\r",
 							"    pm.collectionVariables.set(\"lastEffectiveDate\", responseBody.effectiveDate);\r",
 							"});"
 						],
@@ -39,7 +39,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"employee\": {\r\n        \"employeeId\": \"16a596ae-edd3-4847-99fe-c4518e82c86f\"\r\n    },\r\n    \"salary\": 588321.44,\r\n    \"effectiveDate\": \"{{$isoTimestamp}}\"\r\n}",
+					"raw": "{\r\n    \"employee\": {\r\n        \"employeeId\": \"16a596ae-edd3-4847-99fe-c4518e82c86f\"\r\n    },\r\n    \"salary\": 588321.44,\r\n    \"effectiveDate\": \"2023-04-03\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -80,9 +80,7 @@
 							"\r",
 							"pm.test(\"Effective date matches\", function() {\r",
 							"    const responseBody = pm.response.json();\r",
-							"    const expected = pm.collectionVariables.get(\"lastEffectiveDate\").substring(0,19);\r",
-							"    const actual = responseBody.effectiveDate.substring(0, 19);\r",
-							"    pm.expect(actual).eql(actual);\r",
+							"    pm.expect(responseBody.effectiveDate).eql(pm.collectionVariables.get(\"lastEffectiveDate\"));\r",
 							"});"
 						],
 						"type": "text/javascript"
